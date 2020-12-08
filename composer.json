@@ -1,0 +1,7 @@
+{
+    "name": "changchang700/qy-wechat-developer",
+    "type": "library",
+    "license": "library",
+    "minimum-stability": "dev",
+    "require": {}
+}
