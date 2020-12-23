@@ -27,11 +27,8 @@
         "ext-simplexml": "*"
     },
     "autoload": {
-        "classmap": [
-            "We.php"
-        ],
         "psr-4": {
-            "WePay\\": "WePay"
+            "WorkWeChat\\": "src"
         }
     }
 }
