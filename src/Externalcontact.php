@@ -711,4 +711,233 @@ class Externalcontact extends BasicWorkWeChat
         $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->httpPostForJson($url, json_decode($data,true));
     }
+
+    /**
+     * 获取离职成员的客户列表
+     * @param string $data 参数信息
+     * @uses IDE跟踪查看详细参数
+     *
+        参数	             必须	     说明
+        access_token     是	        调用接口凭证
+        page_id        	 否         分页查询，要查询页号，从0开始
+        page_size	     否	        每次返回的最大记录数，默认为1000，最大值为1000
+        cursor	         否	        分页查询游标，字符串类型，适用于数据量较大的情况，如果使用该参数则无需填写page_id，该参数由上一次调用返回
+     *
+     * @example IDE跟踪查看案例
+     *
+        {
+             "page_id":0
+             "cursor":"",
+             "page_size":100
+        }
+     * 注意:当page_id为1，page_size为100时，表示取第101到第200条记录。由于每个成员的客户数不超过5万，故page_id*page_size 必须小于5万。
+     *
+     * @return array
+     */
+    public function get_unassigned_list(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_unassigned_list?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+    }
+
+    /**
+     * 分配成员的客户
+     * @param string $data 参数信息
+     * @uses IDE跟踪查看详细参数
+     *
+        参数                    必须	        说明
+        access_token	        是	        调用接口凭证
+        external_userid	        是	        外部联系人的userid，注意不是企业成员的帐号
+        handover_userid	        是	        原跟进成员的userid
+        takeover_userid	        是	        接替成员的userid
+        transfer_success_msg	否	        转移成功后发给客户的消息，最多200个字符，不填则使用默认文案，目前只对在职成员分配客户的情况生效
+     *
+     * @example IDE跟踪查看案例
+     *
+         {
+             "external_userid": "woAJ2GCAAAXtWyujaWJHDDGi0mACAAAA",
+             "handover_userid": "zhangsan",
+             "takeover_userid": "lisi",
+             "transfer_success_msg":"您好，您的服务已升级，后续将由我的同事张三@腾讯接替我的工作，继续为您服务。"
+         }
+     *
+     * @return array
+     */
+    public function transfer_client(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/transfer?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+    }
+
+    /**
+     * 查询客户接替结果
+     * @param string $data 参数信息
+     * @uses IDE跟踪查看详细参数
+     *
+        参数	                必须	    说明
+        access_token	    是	    调用接口凭证
+        external_userid	    是	    客户的userid，注意不是企业成员的帐号
+        handover_userid	    是	    原添加成员的userid
+        takeover_userid	    是	    接替成员的userid
+     *
+     * @example IDE跟踪查看案例
+     *
+         {
+            "external_userid": "woAJ2GCAAAXtWyujaWJHDDGi0mACAAAA",
+            "handover_userid": "zhangsan",
+            "takeover_userid": "lisi"
+         }
+     *
+     * @return array
+     * @throws Exceptions\InvalidResponseException
+     */
+    public function get_transfer_result(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_transfer_result?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+    }
+
+    /**
+     * 离职成员的群再分配
+     * @param string $data 参数信息
+     * @uses IDE跟踪查看详细参数
+     *
+        参数	            必须	    说明
+        access_token	是	    调用接口凭证
+        chat_id_list	是	    需要转群主的客户群ID列表。取值范围： 1 ~ 100
+        new_owner	    是	    新群主ID
+     *
+     * @example IDE跟踪查看案例
+     *
+        {
+            "chat_id_list" : ["wrOgQhDgAAcwMTB7YmDkbeBsgT_AAAA", "wrOgQhDgAAMYQiS5ol9G7gK9JVQUAAAA"],
+            "new_owner" : "zhangsan"
+        }
+     *
+        注意：
+        群主离职了的客户群，才可继承
+        继承给的新群主，必须是配置了客户联系功能的成员
+        继承给的新群主，必须有设置实名
+        继承给的新群主，必须有激活企业微信
+        同一个人的群，限制每天最多分配300个给新群主
+     * @return array
+     */
+    public function dimission_flock_transfer(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/transfer?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+
+    }
+
+    /**
+     * 获取联系客户统计数据
+     * @param string $data 参数信息
+     * @uses IDE跟踪查看详细参数
+     *
+          参数	          必须	    说明
+          access_token	  是	    调用接口凭证
+          userid	      否	    成员ID列表，最多100个
+          partyid	      否	    部门ID列表，最多100个
+          start_time	  是	    数据起始时间
+          end_time	      是	    数据结束时间
+     *
+     * @example IDE跟踪查看案例
+     *
+         {
+             "userid": [
+                 "zhangsan",
+                 "lisi"
+             ],
+             "partyid":
+             [
+                  1001,
+                  1002
+             ],
+             "start_time":1536508800,
+             "end_time":1536595200
+         }
+     *
+     * @return array
+     */
+    public function get_user_behavior_data(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_user_behavior_data?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+    }
+
+    /**
+     * 获取客户群统计数据（按群主聚合方式）
+     * @param string $data 参数信息
+     *
+        参数                      	必须	    说明
+        access_token	            是	    调用接口凭证
+        day_begin_time	            是	    起始日期的时间戳，填当天的0时0分0秒（否则系统自动处理为当天的0分0秒）。取值范围：昨天至前180天。
+        day_end_time	            否	    结束日期的时间戳，填当天的0时0分0秒（否则系统自动处理为当天的0分0秒）。取值范围：昨天至前180天。如果不填，默认同 day_begin_time（即默认取一天的数据）
+        owner_filter	            否	    群主过滤，如果不填，表示获取全部群主的数据
+        owner_filter.userid_list	否	    群主ID列表。最多100个
+        order_by	                否	    排序方式。1 - 新增群的数量； 2 - 群总数； 3 - 新增群人数； 4 - 群总人数。默认为1
+        order_asc	                否	    是否升序。0-否；1-是。默认降序
+        offset	                    否	    分页，偏移量, 默认为0
+        limit	                    否	    分页，预期请求的数据量，默认为500，取值范围 1 ~ 1000
+     *
+     * @example IDE跟踪查看案例
+     *
+         {
+            "day_begin_time": 1600272000,
+            "day_end_time": 1600444800,
+            "owner_filter": {
+                "userid_list": ["zhangsan"]
+            },
+            "order_by": 2,
+            "order_asc": 0,
+            "offset" : 0,
+            "limit" : 1000
+         }
+     *
+     * @return array
+     */
+    public function groupchat_statistic(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/statistic?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+    }
+
+    /**
+     * 获取客户群统计数据（按自然日聚合方式）
+     * @param string $data 参数信息
+     *
+        参数          	            必须	    说明
+        access_token	            是	    调用接口凭证
+        day_begin_time	            是	    起始日期的时间戳，填当天的0时0分0秒（否则系统自动处理为当天的0分0秒）。取值范围：昨天至前180天。
+        day_end_time	            否	    结束日期的时间戳，填当天的0时0分0秒（否则系统自动处理为当天的0分0秒）。取值范围：昨天至前180天。如果不填，默认同 day_begin_time（即默认取一天的数据）
+        owner_filter	            否	    群主过滤，如果不填，表示获取全部群主的数据
+        owner_filter.userid_list	否	    群主ID列表。最多100个
+     *
+     * @example IDE跟踪查看案例
+     *
+          {
+              "day_begin_time": 1600272000,
+              "day_end_time": 1600358400,
+              "owner_filter": {
+                  "userid_list": ["zhangsan"]
+              }
+          }
+     *
+     * @return array
+     */
+    public function groupchat_by_day(string $data):array
+    {
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/statistic_group_by_day?access_token=ACCESS_TOKEN';
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, json_decode($data,true));
+    }
+
+
 }
+
