@@ -113,11 +113,11 @@ class User extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function create(string $data): array
+    public function create(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
@@ -227,11 +227,11 @@ class User extends BasicWorkWeChat
             }
         }
      */
-    public function update(string $data):array
+    public function update(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/user/update?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -259,11 +259,11 @@ class User extends BasicWorkWeChat
         }
      * @return array
      */
-    public function batchdelete(string $data):array
+    public function batchdelete(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/user/batchdelete?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -295,7 +295,7 @@ class User extends BasicWorkWeChat
     
     /**
      * userid与openid互换
-     * @param string $data 企业内的成员id
+     * @param array $data 企业内的成员id
      * @expample 
         {
            "userid": "zhangsan"
@@ -309,11 +309,11 @@ class User extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function convert_to_openid(string $data):array
+    public function convert_to_openid(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/user/convert_to_openid?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__,func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -355,7 +355,7 @@ class User extends BasicWorkWeChat
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/batch/invite?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__,func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -372,7 +372,7 @@ class User extends BasicWorkWeChat
     
     /**
      * 获取企业活跃成员数
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      * 
         参数                必须        说明
@@ -386,11 +386,11 @@ class User extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function get_active_stat(string $data):array
+    public function get_active_stat(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/user/get_active_stat?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__,func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**

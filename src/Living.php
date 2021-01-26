@@ -15,7 +15,7 @@ class Living extends BasicWorkWeChat
 
     /**
      * 获取成员直播id列表
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -38,11 +38,11 @@ class Living extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function get_user_livingid(string $data):array
+    public function get_user_livingid(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/living/get_user_livingid?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
@@ -60,7 +60,7 @@ class Living extends BasicWorkWeChat
 
     /**
      * 获取看直播统计
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -77,12 +77,74 @@ class Living extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function get_watch_stat(string $data):array
+    public function get_watch_stat(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/living/get_watch_stat?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
+//    /**
+//     * 创建预约直播
+//     * @param array $data
+//     * @return array
+//     * @throws Exceptions\InvalidResponseException
+//     */
+//    public function livingCreate(array $data)
+//    {
+//        $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/create?access_token=ACCESS_TOKEN';
+//        $this->registerApi($url, __FUNCTION__, func_get_args());
+//        return $this->callPostApi($url, $data);
+//    }
 
+//    /**
+//     * 更新预约直播
+//     * @param array $data
+//     * @return array
+//     * @throws Exceptions\InvalidResponseException
+//     */
+//    public function update(array $data)
+//    {
+//        $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/modify?access_token=ACCESS_TOKEN';
+//        $this->registerApi($url, __FUNCTION__, func_get_args());
+//        return $this->callPostApi($url, $data);
+//    }
+
+    /**
+     * 直播操作
+     * @param array $data
+     * @param $type
+     * @return array
+     * @throws Exceptions\InvalidResponseException
+     */
+    public function modify(array $data, $type)
+    {
+        if (!in_array($type, ['create','update','delete','cancel','detail','detail_more'])) { // 创建 更新 删除 取消 详情 观看明细
+            throw new \Exception('参数类型错误');
+        }
+
+        switch ($type) {
+            case 'create' : {
+                $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/create?access_token=ACCESS_TOKEN';
+            }
+            case 'update' : {
+                $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/modify?access_token=ACCESS_TOKEN';
+            }
+            case 'cancel' : {
+                $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/cancel?access_token=ACCESS_TOKEN';
+            }
+            case 'delete'  : {
+                $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/delete_replay_data?access_token=ACCESS_TOKEN';
+            }
+            case 'detail'  : {
+                $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/get_living_info?access_token=ACCESS_TOKEN&livingid=LIVINGID';
+            }
+            case 'detail_more'  : {
+                $url = 'https://qyapi.weixin.qq.com/cgi-bin/living/get_watch_stat?access_token=ACCESS_TOKEN';
+            }
+        }
+
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->callPostApi($url, $data);
+    }
 }

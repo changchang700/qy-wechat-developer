@@ -14,7 +14,7 @@ class Wedrive extends BasicWorkWeChat
 {
     /**
      * 新建空间
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	          是否必须	说明
@@ -49,17 +49,18 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_create(string $data):array
+    public function space_create(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        
+        return $this->httpPostForJson($url, $data);
     }
 
 
     /**
      * 重命名空间
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	      是否必须	说明
@@ -78,16 +79,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_rename(string $data):array
+    public function space_rename(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_rename?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 解散空间
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	      是否必须	说明
@@ -104,16 +105,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_dismiss(string $data):array
+    public function space_dismiss(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_dismiss?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取空间信息
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
          参数	      是否必须	说明
@@ -130,17 +131,17 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_info(string $data):array
+    public function space_info(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_info?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 
     /**
      * 添加成员/部门 ,该接口用于对指定空间添加成员/部门，可一次性添加多个。
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	          是否必填	说明
@@ -173,17 +174,17 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_acl_add(string $data):array
+    public function space_acl_add(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_acl_add?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 
     /**
      * 移除成员/部门，该接口用于对指定空间移除成员/部门，操作者需要有移除权限。
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	          是否必须	说明
@@ -216,16 +217,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_acl_del(string $data):array
+    public function space_acl_del(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_acl_del?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 权限管理
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数                              是否必须	    说明
@@ -251,16 +252,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_setting(string $data):array
+    public function space_setting(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_setting?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取邀请链接
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	      是否必须	说明
@@ -277,16 +278,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function space_share(string $data):array
+    public function space_share(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_share?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取文件列表
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	        类型	      是否必须	说明
@@ -310,16 +311,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_list(string $data):array
+    public function file_list(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 上传文件
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	              是否必须	说明
@@ -342,16 +343,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_upload(string $data):array
+    public function file_upload(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_upload?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 下载文件
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	      是否必须	说明
@@ -368,16 +369,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_download(string $data):array
+    public function file_download(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_download?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 新建文件/微文档
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	        类型	      是否必须	    说明
@@ -400,16 +401,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_create(string $data):array
+    public function file_create(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 重命名文件
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	        类型	     是否必须	    说明
@@ -428,16 +429,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_rename(string $data):array
+    public function file_rename(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_rename?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 移动文件
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	        类型	      是否必须	说明
@@ -457,16 +458,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_move(string $data):array
+    public function file_move(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_move?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 删除文件
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	      是否必须	说明
@@ -482,16 +483,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_delete(string $data):array
+    public function file_delete(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_delete?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 文件信息
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	        类型	      是否必须	说明
@@ -508,16 +509,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_info(string $data):array
+    public function file_info(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_info?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 新增指定人
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	        是否必须	    说明
@@ -553,16 +554,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_acl_add(string $data):array
+    public function file_acl_add(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_acl_add?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 删除指定人
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	          是否必须	说明
@@ -589,16 +590,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_acl_del(string $data):array
+    public function file_acl_del(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_acl_del?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 分享设置
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	      是否必须	说明
@@ -621,16 +622,16 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_setting(string $data):array
+    public function file_setting(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_setting?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取分享链接
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	         类型	是否必须	 说明
@@ -647,11 +648,11 @@ class Wedrive extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function file_share(string $data):array
+    public function file_share(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_share?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 

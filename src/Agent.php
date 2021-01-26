@@ -19,7 +19,7 @@ class Agent extends BasicWorkWeChat
      * 
      * 本接口只返回互联企业中非本企业内的成员和部门的信息，如果要获取本企业的可见范围，请调用“获取应用”接口
      * 
-     * @param string $data 请求参数
+     * @param $data 请求参数
      * @uses IDE跟踪查看详细参数
      * 
         参数	说明
@@ -37,16 +37,16 @@ class Agent extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function create(string $data): array
+    public function create(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/linkedcorp/agent/get_perm_list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取互联企业成员详细信息
-     * @param string $data 请求参数
+     * @param $data 请求参数
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -60,16 +60,16 @@ class Agent extends BasicWorkWeChat
         }
      * 
      */
-    public function get(string $data):array
+    public function get(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/linkedcorp/user/get?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取互联企业部门成员
-     * @param string $data 请求参数
+     * @param $data 请求参数
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -85,16 +85,16 @@ class Agent extends BasicWorkWeChat
         }
      * 
      */
-    public function simplelist(string $data):array
+    public function simplelist(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/linkedcorp/user/simplelist?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取互联企业部门成员详情
-     * @param string $data 请求参数
+     * @param $data 请求参数
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -110,16 +110,16 @@ class Agent extends BasicWorkWeChat
         }
      * 
      */
-    public function list(string $data):array
+    public function list(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/linkedcorp/user/list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取互联企业部门列表
-     * @param string $data 请求参数
+     * @param $data 请求参数
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -133,19 +133,19 @@ class Agent extends BasicWorkWeChat
         }
      * 
      */
-    public function department_list(string $data):array
+    public function department_list(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/linkedcorp/user/list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取指定的应用详情
-     * @param string $data 应用id
+     * @param $data 应用id
      * @return array
      */
-    public function get_agent(string $data):array
+    public function get_agent(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/agent/get?access_token=ACCESS_TOKEN&agentid={$data}";
         $this->registerApi($url, __FUNCTION__,func_get_args());
@@ -165,7 +165,7 @@ class Agent extends BasicWorkWeChat
 
     /**
      * 设置应用
-     * @param string $data 参数信息
+     * @param $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
          参数	               必须	    说明
@@ -195,16 +195,16 @@ class Agent extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function set(string $data):array
+    public function set(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/agent/set?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 设置应用在工作台展示的模板
-     * @param string $data 参数信息
+     * @param $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
         参数	                必须	    说明
@@ -324,16 +324,16 @@ class Agent extends BasicWorkWeChat
         }
      * @return array
      */
-    public function set_workbench_template(string $data):array
+    public function set_workbench_template(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/agent/set_workbench_template?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取应用在工作台展示的模版
-     * @param string $data 参数信息
+     * @param $data 参数信息
      * @uses IDE跟踪查看详细参数
         参数	            必须	    说明
         access_token	是	    调用接口凭证
@@ -347,16 +347,16 @@ class Agent extends BasicWorkWeChat
      *
      * @return array
      */
-    public function get_workbench_template(string $data):array
+    public function get_workbench_template(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/agent/get_workbench_template?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 设置应用在用户工作台展示的数据
-     * @param string $data 参数信息
+     * @param $data 参数信息
      * @uses IDE跟踪查看详细参数
         参数          	必须	    说明
         access_token	是	    调用接口凭证
@@ -408,11 +408,23 @@ class Agent extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function set_workbench_data(string $data):array
+    public function set_workbench_data(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/agent/set_workbench_data?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
+    /**
+     * 获取应用共享信息
+        access_token	是	调用接口凭证，上级企业应用access_token
+        agentid	是	上级企业应用agentid
+     */
+    public function list_app_share_info()
+    {
+        $url = "https://qyapi.weixin.qq.com/cgi-bin/corpgroup/corp/list_app_share_info?access_token=ACCESS_TOKEN";
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        $data['agentid'] = $this->getConfig()['agentid'];
+        return $this->httpPostForJson($url, $data);
+    }
 }

@@ -16,7 +16,7 @@ class Tag extends BasicWorkWeChat
 
     /**
      * 创建标签
-     * @param string $data 标签信息
+     * @param array $data 标签信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                必须        说明
@@ -33,16 +33,16 @@ class Tag extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function create(string $data): array
+    public function create(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/tag/create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 更新标签名字
-     * @param string $data 标签信息
+     * @param array $data 标签信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                必须        说明
@@ -58,11 +58,11 @@ class Tag extends BasicWorkWeChat
         }
      * 
      */
-    public function update(string $data):array
+    public function update(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/tag/update?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -92,7 +92,7 @@ class Tag extends BasicWorkWeChat
     
     /**
      * 增加标签成员
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                必须        说明
@@ -111,16 +111,16 @@ class Tag extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function addtagusers(string $data):array
+    public function addtagusers(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/tag/addtagusers?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 删除标签成员
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -139,11 +139,11 @@ class Tag extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function deltagusers(string $data):array
+    public function deltagusers(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/tag/deltagusers?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**

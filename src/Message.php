@@ -15,7 +15,7 @@ class Message extends BasicWorkWeChat
 {
     /**
      * 发送应用消息
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      *
      * 文本消息
      * @uses IDE跟踪查看详细参数
@@ -450,16 +450,16 @@ class Message extends BasicWorkWeChat
      *
      * @return array
      */
-    public function send(string $data):array
+    public function send(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 更新任务卡片消息状态
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
         参数	          是否必须	    说明
@@ -480,16 +480,16 @@ class Message extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function update_taskcard(string $data):array
+    public function update_taskcard(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/message/update_taskcard?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 查询应用消息发送统计
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -504,11 +504,11 @@ class Message extends BasicWorkWeChat
      *
      * @return array
      */
-    public function get_statistics(string $data):array
+    public function get_statistics(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/message/get_statistics?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 }

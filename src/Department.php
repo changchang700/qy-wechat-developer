@@ -39,16 +39,16 @@ class Department extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function create(string $data): array
+    public function create(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/department/create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 更新部门
-     * @param type $data 部门信息
+     * @param array $data 部门信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -70,11 +70,11 @@ class Department extends BasicWorkWeChat
         }
      * 
      */
-    public function update(string $data):array
+    public function update(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/department/update?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**

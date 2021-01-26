@@ -14,7 +14,7 @@ class Card extends BasicWorkWeChat
 {
     /**
      * 查询电子发票
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -33,16 +33,16 @@ class Card extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function invoice_reimburse_getinvoiceinfo(string $data):array
+    public function invoice_reimburse_getinvoiceinfo(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/card/invoice/reimburse/getinvoiceinfo?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 更新发票状态
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	                必须	    说明
@@ -62,16 +62,16 @@ class Card extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function invoice_reimburse_updateinvoicestatus(string $data):array
+    public function invoice_reimburse_updateinvoicestatus(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/card/invoice/reimburse/updateinvoicestatus?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 批量更新发票状态
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	                必须	    说明
@@ -98,16 +98,16 @@ class Card extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function invoice_reimburse_updatestatusbatch(string $data):array
+    public function invoice_reimburse_updatestatusbatch(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/card/invoice/reimburse/updatestatusbatch?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 批量查询电子发票
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -135,11 +135,11 @@ class Card extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function invoice_reimburse_getinvoiceinfobatch(string $data):array
+    public function invoice_reimburse_getinvoiceinfobatch(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/card/invoice/reimburse/getinvoiceinfobatch?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 }

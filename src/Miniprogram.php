@@ -16,7 +16,7 @@ class Miniprogram extends BasicWorkWeChat
 
     /**
      * 获取下级企业的小程序session
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    类型	        说明
@@ -33,10 +33,10 @@ class Miniprogram extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function transfer_session(string $data):array
+    public function transfer_session(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/miniprogram/transfer_session?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 }

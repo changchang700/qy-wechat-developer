@@ -16,7 +16,7 @@ class Checkin extends BasicWorkWeChat
 
     /**
      * 获取员工打卡规则
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -34,16 +34,16 @@ class Checkin extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function getcheckinoption(string $data):array
+    public function getcheckinoption(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckinoption?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取打卡记录数据
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	                    必须	    说明
@@ -69,16 +69,16 @@ class Checkin extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function getcheckindata(string $data):array
+    public function getcheckindata(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/checkin/getcheckindata?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 录入打卡人员人脸信息
-     * @param string $data 请求信息
+     * @param array $data 请求信息
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    类型	        说明
@@ -96,11 +96,11 @@ class Checkin extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function addcheckinuserface(string $data):array
+    public function addcheckinuserface(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 

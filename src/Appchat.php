@@ -38,16 +38,16 @@ class Appchat extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function create(string $data):array
+    public function create(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 修改群聊会话
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数          	是否必须	    说明
@@ -71,11 +71,11 @@ class Appchat extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function update(string $data):array
+    public function update(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
@@ -84,7 +84,7 @@ class Appchat extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function get(string $chatID):array
+    public function get( $chatID):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/get?access_token=ACCESS_TOKEN&chatid={$chatID}";
         $this->registerApi($url, __FUNCTION__, func_get_args());
@@ -93,7 +93,7 @@ class Appchat extends BasicWorkWeChat
 
     /**
      * 应用推送消息
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      *
      * 文本消息
      * @uses IDE跟踪查看详细参数
@@ -323,11 +323,11 @@ class Appchat extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function send(string $data):array
+    public function send(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/send?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 

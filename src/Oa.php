@@ -15,7 +15,7 @@ class Oa extends BasicWorkWeChat
 
     /**
      * 创建日历
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数      	  是否必须	说明
@@ -54,16 +54,16 @@ class Oa extends BasicWorkWeChat
      *
      * @return array
      */
-    public function calendar_add(string $data):array
+    public function calendar_add(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/calendar/add?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 更新日历
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	          是否必须	说明
@@ -100,16 +100,16 @@ class Oa extends BasicWorkWeChat
      * 注意, 不可更新组织者。
      * @return array
      */
-    public function calendar_update(string $data):array
+    public function calendar_update(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/calendar/update?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取日历
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	          是否必须	说明
         cal_id_list	    是	    日历ID列表，调用创建日历接口后获得。一次最多可获取1000条
@@ -121,16 +121,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function calender_get(string $data):array
+    public function calender_get(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/calendar/get?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 删除日志
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	        是否必须	    说明
         cal_id	    是	        日历ID
@@ -142,16 +142,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function calendar_del(string $data):array
+    public function calendar_del(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/calendar/del?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 创建日程
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	                      是否必须	说明
         schedule	                是	    日程信息
@@ -195,16 +195,16 @@ class Oa extends BasicWorkWeChat
         }
      * @return array
      */
-    public function schedule_add(string $data):array
+    public function schedule_add(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/schedule/add?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 更新日程
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	                      是否必须	说明
         schedule	                是	    日程信息
@@ -249,16 +249,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function schedule_update(string $data):array
+    public function schedule_update(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/schedule/update?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取日程
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	              是否必须	说明
         schedule_id_list	是	    日程ID列表。一次最多拉取1000条
@@ -272,16 +272,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function schedule_get(string $data):array
+    public function schedule_get(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/schedule/get?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 取消日程
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	          是否必须	说明
         schedule_id	    是	    日程ID
@@ -293,16 +293,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function schedule_del(string $data):array
+    public function schedule_del(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/schedule/del?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取日历下的日程列表
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	      是否必须	说明
         cal_id	    是	    日历ID
@@ -318,16 +318,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function schedule_get_by_calendar(string $data):array
+    public function schedule_get_by_calendar(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/schedule/get_by_calendar?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 添加会议室
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	                    必须	    说明
         access_token	        是	    调用接口凭证
@@ -358,16 +358,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_add(string $data):array
+    public function meetingroom_add(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/add?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 查询会议室
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	            必须	    说明
         access_token	是	    调用接口凭证
@@ -387,16 +387,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_list(string $data):array
+    public function meetingroom_list(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 编辑会议室
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	                    必须	    说明
         access_token	        是	    调用接口凭证
@@ -429,16 +429,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_edit(string $data):array
+    public function meetingroom_edit(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/edit?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 删除会议室
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	            必须	    说明
         access_token	是	    调用接口凭证
@@ -452,16 +452,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_del(string $data):array
+    public function meetingroom_del(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/del?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 查询会议室的预定信息 ，不支持跨天查询。
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	            必须	    说明
         access_token	是	    调用接口凭证
@@ -485,16 +485,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_get_booking_info(string $data):array
+    public function meetingroom_get_booking_info(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/get_booking_info?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 预定会议室，并自动关联日程。
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数          	必须	    说明
         access_token	是	    调用接口凭证
@@ -518,16 +518,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_book(string $data):array
+    public function meetingroom_book(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/book?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 取消预定会议室
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
         参数	            必须	    说明
         access_token	是	    调用接口凭证
@@ -543,16 +543,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function meetingroom_cancel_book(string $data):array
+    public function meetingroom_cancel_book(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/meetingroom/cancel_book?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取审批模板详情
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -567,16 +567,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function gettemplatedetail(string $data):array
+    public function gettemplatedetail(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/gettemplatedetail?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 提交审批申请
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	                    必须	    说明
@@ -653,16 +653,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function applyevent(string $data):array
+    public function applyevent(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/applyevent?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 批量获取审批单号
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	说明
@@ -713,16 +713,16 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function getapprovalinfo(string $data):array
+    public function getapprovalinfo(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/getapprovalinfo?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取审批申请详情
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -738,11 +738,11 @@ class Oa extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function getapprovaldetail(string $data):array
+    public function getapprovaldetail(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/oa/getapprovaldetail?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 

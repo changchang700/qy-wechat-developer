@@ -16,7 +16,7 @@ class Linkedcorp extends BasicWorkWeChat
 
     /**
      * 互联企业发送应用消息
-     * @param string $data
+     * @param array $data
      *
      * 文本消息
      * @uses IDE跟踪查看详细参数
@@ -368,11 +368,11 @@ class Linkedcorp extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function message_send(string $data):array
+    public function message_send(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/linkedcorp/message/send?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 }

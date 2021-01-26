@@ -17,7 +17,7 @@ class Dial extends BasicWorkWeChat
 
     /**
      * 获取公费电话拨打记录
-     * @param string $data 请求参数
+     * @param array $data 请求参数
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -42,11 +42,11 @@ class Dial extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function get_dial_record(string $data):array
+    public function get_dial_record(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/dial/get_dial_record?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 

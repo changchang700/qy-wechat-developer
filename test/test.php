@@ -7,13 +7,14 @@ use WorkWeChat\Department;
 use WorkWeChat\Tag;
 use WorkWeChat\Batch;
 use WorkWeChat\Externalcontact;
+use WorkWeChat\Agent;
 
 $config = [
     "corpid" => 'wwd0cd421b22c19613',
     "corpsecret" => 'qliwrLTKM6vXoyzPSqYH3ErDiv4tc8k2NSK7FaFI4gQ'
 ];
 
-$obj = new Externalcontact($config);
+$obj = new Agent($config);
 
 $d = '{
    "name": "广州研发中心",

@@ -16,7 +16,7 @@ class Corpgroup extends BasicWorkWeChat
 
     /**
      * 获取应用共享信息
-     * @param string $data
+     * @param array $data
      * @uses IDE跟踪查看详细参数
      *
         参数	必须	说明
@@ -31,11 +31,11 @@ class Corpgroup extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function corp_list_app_share_info(string $data):array
+    public function corp_list_app_share_info(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/corpgroup/corp/list_app_share_info?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
@@ -57,10 +57,10 @@ class Corpgroup extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function corp_gettoken(string $data):array
+    public function corp_gettoken(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/corpgroup/corp/gettoken?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 }

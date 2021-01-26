@@ -30,7 +30,7 @@ class Externalcontact extends BasicWorkWeChat
     
     /**
      * 配置客户联系「联系我」方式
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -94,16 +94,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function add_contact_way(string $data):array
+    public function add_contact_way(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_contact_way?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取企业已配置的「联系我」方式
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -119,16 +119,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function get_contact_way(string $data):array
+    public function get_contact_way(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_contact_way?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 更新企业已配置的「联系我」方式
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -188,16 +188,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function update_contact_way(string $data):array
+    public function update_contact_way(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_contact_way?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 删除企业已配置的「联系我」方式
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -212,11 +212,11 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function del_contact_way(string $data):array
+    public function del_contact_way(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_contact_way?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -240,14 +240,14 @@ class Externalcontact extends BasicWorkWeChat
      */
     public function get(string $external_userid):array
     {
-        $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid={$userid}";
+        $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid={$external_userid}";
         $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->httpGetForJson($url);
     }
     
     /**
      * 批量获取客户详情
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -259,23 +259,24 @@ class Externalcontact extends BasicWorkWeChat
      * @example IDE跟踪查看案例
      * 
         {
-            "userid":"rocky",
+            "userid":"rocky",// wmKIPGCAAAg1g-uY1kjnVCJNTPFJvG5A
             "cursor":"",
-            "limit":100
+            "limit":100,
+            "config_id":'69dc240399581c7bb1182f7a16f43234'
         }
      * 
      * @return array
      */
-    public function get_by_user(string $data):array
+    public function get_by_user(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_contact_way?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 修改客户备注信息
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                必须        说明
@@ -291,23 +292,24 @@ class Externalcontact extends BasicWorkWeChat
      * @example IDE跟踪查看案例
      * 
         {
-            "userid":"rocky",
+            "userid":"LiYongLei",
+            "external_userid":"wmKIPGCAAAg1g-uY1kjnVCJNTPFJvG5A",
             "cursor":"",
             "limit":100
         }
      * 
      * @return array
      */
-    public function remark(string $data):array
+    public function remark(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/remark?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 管理企业标签
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -320,21 +322,25 @@ class Externalcontact extends BasicWorkWeChat
             "tag_id": [
                 "etXXXXXXXXXX",
                 "etYYYYYYYYYY"
-            ]
+            ],
+            "group_id": [
+                "etXXXXXXXXXX",
+                "etYYYYYYYYYY"
+            ],
         }
      * 
      * @return array
      */
-    public function get_corp_tag_list(string $data):array
+    public function get_corp_tag_list(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_corp_tag_list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 管理企业标签
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -355,16 +361,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function mark_tag(string $data):array
+    public function mark_tag(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/mark_tag?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取客户群列表
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                        必须	说明
@@ -388,16 +394,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function groupchat_list(string $data):array
+    public function groupchat_list(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/list?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取客户群详情
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -412,16 +418,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function groupchat_get(string $data):array
+    public function groupchat_get(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/get?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 添加企业群发消息任务
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                        必须        说明
@@ -473,16 +479,37 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function add_msg_template(string $data):array
+    public function add_msg_template(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_msg_template?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
+    }
+
+    /**
+     * 获取群发记录列表
+     *  access_token是	调用接口凭证
+        chat_type	是	群发任务的类型，默认为single，表示发送给客户，group表示发送给客户群
+        start_time	是	群发任务记录开始时间
+        end_time	是	群发任务记录结束时间
+        creator	否	群发任务创建人企业账号id
+        filter_type	否	创建人类型。0：企业发表 1：个人发表 2：所有，包括个人创建以及企业创建，默认情况下为所有类型
+        limit	否	返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
+        cursor	否	用于分页查询的游标，字符串类型，由上一次调用返回，首次调用可不填
+     * @param array $data
+     * @return array
+     * @throws Exceptions\InvalidResponseException
+     */
+    public function get_groupmsg_list(array $data)
+    {
+        $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_groupmsg_list?access_token=ACCESS_TOKEN";
+        $this->registerApi($url, __FUNCTION__, func_get_args());
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取企业群发消息发送结果
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -497,16 +524,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function get_group_msg_result(string $data):array
+    public function get_group_msg_result(array $data):array
     {
-        $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_group_msg_result?access_token=ACCESS_TOKEN";
+        $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_groupmsg_send_result?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 发送新客户欢迎语
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                        必须        说明
@@ -551,16 +578,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function send_welcome_msg(string $data):array
+    public function send_welcome_msg(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/send_welcome_msg?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 添加群欢迎语素材
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                        必须        说明
@@ -603,16 +630,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function group_welcome_template_add(string $data):array
+    public function group_welcome_template_add(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/group_welcome_template/add?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 编辑群欢迎语素材
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数                        必须        说明
@@ -657,16 +684,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function group_welcome_template_edit(string $data):array
+    public function group_welcome_template_edit(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/group_welcome_template/edit?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 获取群欢迎语素材
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -681,16 +708,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function group_welcome_template_get(string $data):array
+    public function group_welcome_template_get(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/group_welcome_template/edit?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
      * 删除群欢迎语素材
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      * 
         参数            必须        说明
@@ -705,16 +732,16 @@ class Externalcontact extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function group_welcome_template_del(string $data):array
+    public function group_welcome_template_del(array $data):array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/group_welcome_template/edit?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取离职成员的客户列表
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
         参数	             必须	     说明
@@ -734,16 +761,16 @@ class Externalcontact extends BasicWorkWeChat
      *
      * @return array
      */
-    public function get_unassigned_list(string $data):array
+    public function get_unassigned_list(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_unassigned_list?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 分配成员的客户
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
         参数                    必须	        说明
@@ -764,16 +791,16 @@ class Externalcontact extends BasicWorkWeChat
      *
      * @return array
      */
-    public function transfer_client(string $data):array
+    public function transfer_client(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/transfer?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 查询客户接替结果
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
         参数	                必须	    说明
@@ -793,16 +820,16 @@ class Externalcontact extends BasicWorkWeChat
      * @return array
      * @throws Exceptions\InvalidResponseException
      */
-    public function get_transfer_result(string $data):array
+    public function get_transfer_result(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_transfer_result?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 离职成员的群再分配
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
         参数	            必须	    说明
@@ -825,17 +852,17 @@ class Externalcontact extends BasicWorkWeChat
         同一个人的群，限制每天最多分配300个给新群主
      * @return array
      */
-    public function dimission_flock_transfer(string $data):array
+    public function dimission_flock_transfer(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/transfer?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
 
     }
 
     /**
      * 获取联系客户统计数据
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      * @uses IDE跟踪查看详细参数
      *
           参数	          必须	    说明
@@ -863,16 +890,16 @@ class Externalcontact extends BasicWorkWeChat
      *
      * @return array
      */
-    public function get_user_behavior_data(string $data):array
+    public function get_user_behavior_data(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_user_behavior_data?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取客户群统计数据（按群主聚合方式）
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      *
         参数                      	必须	    说明
         access_token	            是	    调用接口凭证
@@ -901,16 +928,16 @@ class Externalcontact extends BasicWorkWeChat
      *
      * @return array
      */
-    public function groupchat_statistic(string $data):array
+    public function groupchat_statistic(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/statistic?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
     /**
      * 获取客户群统计数据（按自然日聚合方式）
-     * @param string $data 参数信息
+     * @param array $data 参数信息
      *
         参数          	            必须	    说明
         access_token	            是	    调用接口凭证
@@ -931,11 +958,11 @@ class Externalcontact extends BasicWorkWeChat
      *
      * @return array
      */
-    public function groupchat_by_day(string $data):array
+    public function groupchat_by_day(array $data):array
     {
         $url = 'https://qyapi.weixin.qq.com/cgi-bin/externalcontact/groupchat/statistic_group_by_day?access_token=ACCESS_TOKEN';
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
 
 

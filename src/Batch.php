@@ -19,7 +19,7 @@ class Batch extends BasicWorkWeChat
      * 
      * 本接口以userid（帐号）为主键，增量更新企业微信通讯录成员。请先下载CSV模板(下载增量更新成员模版)，根据需求填写文件内容。
      * 
-     * @param string $data 增量更新成员
+     * @param array $data 增量更新成员
      * @info IDE跟踪查看使用说明
      * 
         注意事项：
@@ -54,11 +54,11 @@ class Batch extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function syncuser(string $data): array
+    public function syncuser(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/batch/syncuser?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -66,7 +66,7 @@ class Batch extends BasicWorkWeChat
      * 
      * 本接口以userid为主键，全量覆盖企业的通讯录成员，任务完成后企业的通讯录成员与提交的文件完全保持一致。请先下载CSV文件(下载全量覆盖成员模版)，根据需求填写文件内容。
      * 
-     * @param string $data 全量覆盖成员
+     * @param array $data 全量覆盖成员
      * @info IDE跟踪查看使用说明
      * 
         注意事项：
@@ -103,11 +103,11 @@ class Batch extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function replaceuser(string $data): array
+    public function replaceuser(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceuser?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
@@ -115,7 +115,7 @@ class Batch extends BasicWorkWeChat
      * 
      * 本接口以partyid为键，全量覆盖企业的通讯录组织架构，任务完成后企业的通讯录组织架构与提交的文件完全保持一致。请先下载CSV文件(下载全量覆盖部门模版)，根据需求填写文件内容。
      * 
-     * @param string $data 全量覆盖部门
+     * @param array $data 全量覆盖部门
      * @info IDE跟踪查看使用说明
      * 
         注意事项：
@@ -148,11 +148,11 @@ class Batch extends BasicWorkWeChat
      * 
      * @return array
      */
-    public function replaceparty(string $data): array
+    public function replaceparty(array $data): array
     {
         $url = "https://qyapi.weixin.qq.com/cgi-bin/batch/replaceparty?access_token=ACCESS_TOKEN";
         $this->registerApi($url, __FUNCTION__, func_get_args());
-        return $this->httpPostForJson($url, json_decode($data,true));
+        return $this->httpPostForJson($url, $data);
     }
     
     /**
