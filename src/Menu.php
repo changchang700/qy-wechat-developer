@@ -15,7 +15,7 @@ class Menu extends BasicWorkWeChat
 {
     /**
      * 创建菜单
-     * @param string $data 参数信息
+     * @param string $data 请求参数
      * @param string $agentId 应用ID
      * @uses IDE跟踪查看详细参数
      *

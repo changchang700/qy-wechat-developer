@@ -1,24 +1,16 @@
 <?php
 namespace WorkWeChat\Contracts;
 
-use mysql_xdevapi\Exception;
+use Exception;
 use WorkWeChat\Contracts\Tools;
+use WorkWeChat\Contracts\DataError;
 use WorkWeChat\Contracts\DataArray;
 use WorkWeChat\Exceptions\InvalidArgumentException;
 use WorkWeChat\Exceptions\InvalidResponseException;
 
 /**
  * 实例类属性
- * @property \WorkWeChat\Agent $agent
- * @property \WorkWeChat\Appchat $appchat
- * @property \WorkWeChat\Batch $batch
- * @property \WorkWeChat\Card $card
- * @property \WorkWeChat\Checkin $checkin
- * @property \WorkWeChat\Corp $corp
- * @property \WorkWeChat\Corpgroup $corpgroup
- * @property \WorkWeChat\Department $department
- * @property \WorkWeChat\Dial $dial
- * @property \WorkWeChat\Externalcontact  $externalcontact
+ * 
  * Class BasicWeChat
  * @package WeChat\Contracts
  */
@@ -26,10 +18,11 @@ class BasicWorkWeChat
 {
 
     /**
-     * 当前微信配置
-     * @var DataArray
+     * 企业微信配置
+     *
+     * @var array
      */
-    public $config;
+    public $config = [];
 
     /**
      * 访问AccessToken
@@ -38,7 +31,7 @@ class BasicWorkWeChat
     public $access_token = '';
 
     /**
-     * 实例
+     * 企业微信SDK实例
      * @var array
      */
     public $instance = [];
@@ -68,6 +61,13 @@ class BasicWorkWeChat
     protected static $cache;
 
     /**
+     * 企业应用access_token
+     *
+     * @var [type]
+     */
+    protected $sub_access_token = null;
+
+    /**
      * BasicWeChat constructor.
      * @param array $options
      */
@@ -83,7 +83,6 @@ class BasicWorkWeChat
         }
 
         $this->config = $this->conf[static::class] = new DataArray($options);
-
         $this->init();
     }
 
@@ -94,10 +93,12 @@ class BasicWorkWeChat
 
     /**
      * 静态创建对象
+     *
      * @param array $config
-     * @return static
+     * @return array
      */
-    public static function instance(array $config){
+    public static function instance(array $config):array
+    {
         $key = md5(get_called_class() . serialize($config));
         if (isset(self::$cache[$key])) return self::$cache[$key];
         return self::$cache[$key] = new static($config);
@@ -105,11 +106,10 @@ class BasicWorkWeChat
 
     /**
      * 获取访问accessToken
+     *
      * @return string
-     * @throws \WeChat\Exceptions\InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function getAccessToken()
+    public function getAccessToken():string
     {
         if (!empty($this->access_token)) {
             return $this->access_token;
@@ -120,13 +120,6 @@ class BasicWorkWeChat
             return $this->access_token;
         }
         // 处理开放平台授权公众号获取AccessToken
-        if (!empty($this->GetAccessTokenCallback) && is_callable($this->GetAccessTokenCallback)) {
-            $this->access_token = call_user_func_array($this->GetAccessTokenCallback, [$this->conf[static::class]->get('appid'), $this]);
-            if (!empty($this->access_token)) {
-                Tools::setCache($this->getAccessTokenCacheKey(), $this->access_token, 7000);
-            }
-            return $this->access_token;
-        }
         list($corpid, $corpsecret) = [$this->conf[static::class]->get('corpid'), $this->conf[static::class]->get('corpsecret')];
         $url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={$corpid}&corpsecret={$corpsecret}";
         $result = Tools::json2arr(Tools::get($url));
@@ -136,15 +129,11 @@ class BasicWorkWeChat
         return $this->access_token = $result['access_token'];
     }
 
-    protected $sub_access_token = null;
-
     /**
      * 获取下级企业的access_token
-     * @return mixed|null
-     * @throws InvalidResponseException
-     * @throws \WorkWeChat\Exceptions\LocalCacheException
+     * @return string
      */
-    public function getSubCorpAccessToken()
+    public function getSubCorpAccessToken():string
     {
         if (!empty($this->sub_access_token)) {
             return $this->sub_access_token;
@@ -168,14 +157,12 @@ class BasicWorkWeChat
     /**
      * 设置外部接口 AccessToken
      * @param string $access_token
-     * @throws \WeChat\Exceptions\LocalCacheException
-     * @author 高一平 <iam@gaoyiping.com>
      *
      * 当用户使用自己的缓存驱动时，直接实例化对象后可直接设置 AccessToekn
      * - 多用于分布式项目时保持 AccessToken 统一
      * - 使用此方法后就由用户来保证传入的 AccessToekn 为有效 AccessToekn
      */
-    public function setAccessToken($access_token)
+    public function setAccessToken($access_token):void
     {
         if (!is_string($access_token)) {
             throw new InvalidArgumentException("Invalid AccessToken type, need string.");
@@ -189,7 +176,7 @@ class BasicWorkWeChat
      * @param bool $is_sub  【false 获取下级企业的access_token】，
      * @return string
      */
-    private function getAccessTokenCacheKey($is_sub = false)
+    private function getAccessTokenCacheKey($is_sub = false): string
     {
         $cache_type = $is_sub ? '_sub_access_token' : '_access_token';
         return $this->conf[static::class]->get('appid') . $this->conf[static::class]->get('corpsecret') . $cache_type ;
@@ -199,7 +186,7 @@ class BasicWorkWeChat
      * 清理删除 AccessToken
      * @return bool
      */
-    public function delAccessToken()
+    public function delAccessToken():bool
     {
         $this->access_token = '';
         return Tools::delCache($this->getAccessTokenCacheKey());
@@ -212,7 +199,7 @@ class BasicWorkWeChat
      * @throws InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    protected function httpGetForJson($url)
+    protected function httpGetForJson($url):array
     {
         try {
             return Tools::json2arr(Tools::get($url));
@@ -224,7 +211,7 @@ class BasicWorkWeChat
                     return call_user_func_array([$this, $this->currentMethod['method']], $this->currentMethod['arguments']);
                 }
             }
-            throw new InvalidResponseException($e->getMessage(), $e->getCode());
+            throw new InvalidResponseException($e->getMessage()."【".DataError::toMessage($e->getCode())."】", $e->getCode());
         }
     }
 
@@ -237,7 +224,7 @@ class BasicWorkWeChat
      * @throws InvalidResponseException
      * @throws \WeChat\Exceptions\LocalCacheException
      */
-    protected function httpPostForJson($url, array $data, $buildToJson = true,$enEmoji = true)
+    protected function httpPostForJson($url, array $data, $buildToJson = true,$enEmoji = true):array
     {
         try {
             return Tools::json2arr(Tools::post($url, $buildToJson ? Tools::arr2json($data,$enEmoji) : $data));
@@ -246,7 +233,7 @@ class BasicWorkWeChat
                 [$this->delAccessToken(), $this->isTry = true];
                 return call_user_func_array([$this, $this->currentMethod['method']], $this->currentMethod['arguments']);
             }
-            throw new InvalidResponseException($e->getMessage(), $e->getCode());
+            throw new InvalidResponseException($e->getMessage()."【".DataError::toMessage($e->getCode())."】", $e->getCode());
         }
     }
 
@@ -256,10 +243,8 @@ class BasicWorkWeChat
      * @param string $method 当前接口方法
      * @param array $arguments 请求参数
      * @return mixed
-     * @throws \WeChat\Exceptions\InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
      */
-    protected function registerApi(&$url, $method, $arguments = [])
+    protected function registerApi(&$url, $method, $arguments = []):string
     {
         $this->currentMethod = ['method' => $method, 'arguments' => $arguments];
         if (empty($this->access_token)) {
@@ -274,10 +259,8 @@ class BasicWorkWeChat
      * @param array $data POST提交接口参数
      * @param bool $isBuildJson
      * @return array
-     * @throws InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function callPostApi($url, array $data, $isBuildJson = true)
+    public function callPostApi($url, array $data, $isBuildJson = true): array
     {
         $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->httpPostForJson($url, $data, $isBuildJson);
@@ -287,10 +270,8 @@ class BasicWorkWeChat
      * 接口通用GET请求方法
      * @param string $url 接口URL
      * @return array
-     * @throws InvalidResponseException
-     * @throws \WeChat\Exceptions\LocalCacheException
      */
-    public function callGetApi($url)
+    public function callGetApi($url): array
     {
         $this->registerApi($url, __FUNCTION__, func_get_args());
         return $this->httpGetForJson($url);
@@ -354,7 +335,6 @@ class BasicWorkWeChat
         $class = '\WorkWeChat\\'.ucfirst($key);
 
         if (is_subclass_of($class, get_parent_class(static::class))) {
-
             $instance = new $class($this->conf[static::class]->get() ?? []);
             $this->init();
             $this->instance[$class] = $instance;
@@ -362,61 +342,5 @@ class BasicWorkWeChat
         }
 
         throw new \Exception('不存在的调用'.static::class.'->'.$key);
-    }
-
-    /**
-     * 构建文件请求类型
-     * @param $filename
-     * @param null $mimetype
-     * @param null $postname
-     * @return \CURLFile|string
-     */
-    public function getCurlFile($filename, $mimetype = null, $postname = null)
-    {
-        if (is_string($filename) && file_exists($filename)) {
-            if (is_null($postname)) $postname = basename($filename);
-            if (is_null($mimetype)) $mimetype = self::getExtMine(pathinfo($filename, 4));
-            if (class_exists('CURLFile')) {
-                return new \CURLFile($filename, $mimetype, $postname);
-            } else {
-                return "@{$filename};filename={$postname};type={$mimetype}";
-            }
-        } else if (($ext = pathinfo($filename, PATHINFO_EXTENSION)) and in_array($ext, ['jpg','jpeg','video','mp4','mp3','amr','png'])) {
-            return new \CURLFile($filename, $mimetype, $postname);
-        }
-        return $filename;
-    }
-
-
-    /**
-     * 获取文件后缀类型
-     * @param $ext
-     * @param array $mine
-     * @return string
-     */
-    public static function getExtMine($ext, $mine = [])
-    {
-        $mines = self::getMines();
-        foreach (is_string($ext) ? explode(',', $ext) : $ext as $e) {
-            $mine[] = isset($mines[strtolower($e)]) ? $mines[strtolower($e)] : 'application/octet-stream';
-        }
-        return join(',', array_unique($mine));
-    }
-
-    /**
-     * 获取所有文件扩展的类型
-     * @return array
-     * @throws LocalCacheException
-     */
-    private static function getMines()
-    {
-        $mines = self::getCache('all_ext_mine');
-        if (empty($mines)) {
-            $content = file_get_contents('http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types');
-            preg_match_all('#^([^\s]{2,}?)\s+(.+?)$#ism', $content, $matches, PREG_SET_ORDER);
-            foreach ($matches as $match) foreach (explode(" ", $match[2]) as $ext) $mines[$ext] = $match[1];
-            self::setCache('all_ext_mine', $mines);
-        }
-        return $mines;
     }
 }

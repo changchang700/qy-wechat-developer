@@ -4,9 +4,13 @@ namespace WorkWeChat\Contracts;
 use WorkWeChat\Exceptions\InvalidArgumentException;
 use WorkWeChat\Exceptions\InvalidResponseException;
 use WorkWeChat\Exceptions\LocalCacheException;
+use WorkWeChat\Contracts\MyCurlFile;
 use WorkWeChat\Contracts\Cache;
+use CURLFile;
+use Redis;
+
 /**
- * 网络请求支持
+ * 工具库
  * Class Tools
  * @package WeChat\Contracts
  */
@@ -41,7 +45,7 @@ class Tools
      * @param string $str 字符串前缀
      * @return string
      */
-    public static function createNoncestr($length = 32, $str = "")
+    public static function createNoncestr(int $length = 32, string $str = ""):string
     {
         $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
         for ($i = 0; $i < $length; $i++) {
@@ -50,15 +54,14 @@ class Tools
         return $str;
     }
 
-
     /**
      * 根据文件后缀获取文件类型
-     * @param string|array $ext 文件后缀
+     *
+     * @param array $ext 文件后缀
      * @param array $mine 文件后缀MINE信息
      * @return string
-     * @throws LocalCacheException
      */
-    public static function getExtMine($ext, $mine = [])
+    public static function getExtMine(array $ext, array $mine = []):string
     {
         $mines = self::getMines();
         foreach (is_string($ext) ? explode(',', $ext) : $ext as $e) {
@@ -69,10 +72,10 @@ class Tools
 
     /**
      * 获取所有文件扩展的类型
+     *
      * @return array
-     * @throws LocalCacheException
      */
-    private static function getMines()
+    private static function getMines():string
     {
         $mines = self::getCache('all_ext_mine');
         if (empty($mines)) {
@@ -87,12 +90,11 @@ class Tools
     /**
      * 创建CURL文件对象
      * @param $filename
-     * @param string $mimetype
-     * @param string $postname
-     * @return \CURLFile|string
-     * @throws LocalCacheException
+     * @param string $mimetype MINE类型
+     * @param string $postname 请求文件名称
+     * @return CURLFile|string
      */
-    public static function createCurlFile($filename, $mimetype = null, $postname = null)
+    public static function createCurlFile(string $filename, string $mimetype = null, string $postname = null)
     {
         if (is_string($filename) && file_exists($filename)) {
             if (is_null($postname)) $postname = basename($filename);
@@ -107,21 +109,21 @@ class Tools
 
     /**
      * 数组转XML内容
-     * @param array $data
+     * @param array $data 待转换数组
      * @return string
      */
-    public static function arr2xml($data)
+    public static function arr2xml(array $data):string
     {
         return "<xml>" . self::_arr2xml($data) . "</xml>";
     }
 
     /**
      * XML内容生成
-     * @param array $data 数据
+     * @param array $data 待转换成数组
      * @param string $content
      * @return string
      */
-    private static function _arr2xml($data, $content = '')
+    private static function _arr2xml(array $data, string $content = ''):string
     {
         foreach ($data as $key => $val) {
             is_numeric($key) && $key = 'item';
@@ -140,10 +142,10 @@ class Tools
 
     /**
      * 解析XML内容到数组
-     * @param string $xml
+     * @param string $xml 待转化xml
      * @return array
      */
-    public static function xml2arr($xml)
+    public static function xml2arr(string $xml):array
     {
         $entity = libxml_disable_entity_loader(true);
         $data = (array)simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -153,21 +155,40 @@ class Tools
 
     /**
      * 数组转xml内容
-     * @param array $data
-     * @return null|string|string
+     * @param array $data 待转化数组
+     * @param boolean $enEmoji 是否转换emoji表情
+     * @return string
      */
-    public static function arr2json($data,$enEmoji=true)
+    public static function arr2json(array $data,bool $enEmoji=true):string
     {
         $json = json_encode($enEmoji?self::buildEnEmojiData($data):$data, JSON_UNESCAPED_UNICODE);
         return $json === '[]' ? '{}' : $json;
     }
 
     /**
+     * 解析JSON内容到数组
+     * @param string $json
+     * @return array
+     * @throws InvalidResponseException
+     */
+    public static function json2arr(string $json): array
+    {
+        $result = json_decode($json, true);
+        if (empty($result)) {
+            throw new InvalidResponseException('invalid response.', '0');
+        }
+        if (!empty($result['errcode'])) {
+            throw new InvalidResponseException($result['errmsg'], $result['errcode'], $result);
+        }
+        return $result;
+    }
+
+    /**
      * 数组对象Emoji编译处理
-     * @param array $data
+     * @param array $data 待处理数组
      * @return array
      */
-    public static function buildEnEmojiData(array $data)
+    public static function buildEnEmojiData(array $data):array
     {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
@@ -183,10 +204,10 @@ class Tools
 
     /**
      * 数组对象Emoji反解析处理
-     * @param array $data
+     * @param array $data 待处理数组
      * @return array
      */
-    public static function buildDeEmojiData(array $data)
+    public static function buildDeEmojiData(array $data):array
     {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
@@ -201,11 +222,11 @@ class Tools
     }
 
     /**
-     * Emoji原形转换为String
+     * Emoji原形转换为Emoji字符串
      * @param string $content
      * @return string
      */
-    public static function emojiEncode($content)
+    public static function emojiEncode(string $content):string
     {
         return json_decode(preg_replace_callback("/(\\\u[ed][0-9a-f]{3})/i", function ($string) {
             return addslashes($string[0]);
@@ -217,29 +238,11 @@ class Tools
      * @param string $content
      * @return string
      */
-    public static function emojiDecode($content)
+    public static function emojiDecode(string $content):string
     {
         return json_decode(preg_replace_callback('/\\\\\\\\/i', function () {
             return '\\';
         }, json_encode($content)));
-    }
-
-    /**
-     * 解析JSON内容到数组
-     * @param string $json
-     * @return array
-     * @throws InvalidResponseException
-     */
-    public static function json2arr($json)
-    {
-        $result = json_decode($json, true);
-        if (empty($result)) {
-            throw new InvalidResponseException('invalid response.', '0');
-        }
-        if (!empty($result['errcode'])) {
-            throw new InvalidResponseException($result['errmsg'], $result['errcode'], $result);
-        }
-        return $result;
     }
 
     /**
@@ -250,7 +253,7 @@ class Tools
      * @return boolean|string
      * @throws LocalCacheException
      */
-    public static function get($url, $query = [], $options = [])
+    public static function get(string $url, array $query = [], array $options = [])
     {
         $options['query'] = $query;
         return self::doRequest('get', $url, $options);
@@ -259,12 +262,12 @@ class Tools
     /**
      * 以post访问模拟访问
      * @param string $url 访问URL
-     * @param array $data POST数据
+     * @param string|array $data POST数据
      * @param array $options
-     * @return boolean|string
+     * @return bool|string
      * @throws LocalCacheException
      */
-    public static function post($url, $data = [], $options = [])
+    public static function post(string $url, $data = [], $options = [])
     {
         $options['data'] = $data;
         return self::doRequest('post', $url, $options);
@@ -352,7 +355,7 @@ class Tools
      * @return string
      * @throws LocalCacheException
      */
-    public static function pushFile($name, $content)
+    public static function pushFile(string $name, string $content):string
     {
         if (is_callable(self::$cache_callable['put'])) {
             return call_user_func_array(self::$cache_callable['put'], func_get_args());
@@ -372,69 +375,78 @@ class Tools
      * @return string
      * @throws LocalCacheException
      */
-    public static function setCache($name, $value = '', $expired = 3600)
+    public static function setCache(string $name, string $value = '', int $expired = 3600):string
     {
-        //重写设置缓存
-        return Cache::instance()->set($name,$value,$expired);
-        
-        if (is_callable(self::$cache_callable['set'])) {
-            return call_user_func_array(self::$cache_callable['set'], func_get_args());
+        //如果存在TP框架的redis配置文件则使用tp配置
+        $file_path = __DIR__.'/../../../../../config/cache.php';
+        if (file_exists($file_path)) {
+            return self::redis()->set($name,$value,$expired);
+        }else{
+            //重写设置缓存
+            return Cache::instance()->set($name,$value,$expired);
         }
-        $file = self::_getCacheName($name);
-        $data = ['name' => $name, 'value' => $value, 'expired' => time() + intval($expired)];
-        if (!file_put_contents($file, serialize($data))) {
-            throw new LocalCacheException('local cache error.', '0');
-        }
-        return $file;
     }
 
     /**
      * 获取缓存内容
      * @param string $name 缓存名称
-     * @return null|mixed
+     * @return string
      */
-    public static function getCache($name)
-    {
-        //重写获取缓存
-        return Cache::instance()->get($name);
-        
-        if (is_callable(self::$cache_callable['get'])) {
-            return call_user_func_array(self::$cache_callable['get'], func_get_args());
+    public static function getCache(string $name):string
+    {        
+        //如果存在TP框架的redis配置文件则使用tp配置
+        $file_path = __DIR__.'/../../../../../config/cache.php';
+        if (file_exists($file_path)) {
+            return self::redis()->get($name);
+        }else{
+            return Cache::instance()->get($name);
         }
-        $file = self::_getCacheName($name);
-        if (file_exists($file) && ($content = file_get_contents($file))) {
-            $data = unserialize($content);
-            if (isset($data['expired']) && (intval($data['expired']) === 0 || intval($data['expired']) >= time())) {
-                return $data['value'];
-            }
-            self::delCache($name);
-        }
-        return null;
     }
 
     /**
      * 移除缓存文件
      * @param string $name 缓存名称
-     * @return boolean
+     * @return bool
      */
-    public static function delCache($name)
+    public static function delCache(string $name): bool
     {
-        //重写删除缓存
-        return Cache::instance()->rm($name); 
-        
-        if (is_callable(self::$cache_callable['del'])) {
-            return call_user_func_array(self::$cache_callable['del'], func_get_args());
+        //如果存在TP框架的redis配置文件则使用tp配置
+        $file_path = __DIR__.'/../../../../../config/cache.php';
+        if (file_exists($file_path)) {
+            return self::redis()->del($name);
+        }else{
+            //重写删除缓存
+            return Cache::instance()->rm($name); 
         }
-        $file = self::_getCacheName($name);
-        return file_exists($file) ? unlink($file) : true;
     }
 
+    /**
+     * 获取redis
+     *
+     * @return Redis
+     */
+    public static function redis():Redis
+    {
+        static $redis = null;
+        if($redis === null){
+            $file_path = __DIR__.'/../../../../../config/cache.php';
+            $config = require_once($file_path);
+            $config = config('cache');
+            $redis_config = $config['stores']['redis'];
+            $redis = new Redis();
+            $redis->connect($redis_config['host'],$redis_config['port']);
+            $redis->auth($redis_config['password']);
+            $redis->select($redis_config['select']);
+        }
+        return $redis;
+    }
+    
     /**
      * 应用缓存目录
      * @param string $name
      * @return string
      */
-    private static function _getCacheName($name)
+    private static function _getCacheName(string $name):string
     {
         if (empty(self::$cache_path)) {
             self::$cache_path = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'Cache' . DIRECTORY_SEPARATOR;
